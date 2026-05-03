@@ -1,0 +1,43 @@
+{
+  "request": {
+    "method": "POST",
+    "path": "/accounts/{accountId}/orders",
+    "headers": {
+      "Authorization": "Bearer {ACCESS_TOKEN}",
+      "Content-Type": "application/json"
+    },
+    "parameters": {
+      "accountId": "ACC-RESELLER-001"
+    },
+    "body": {
+      "customerId": "CUST-10001",
+      "items": [
+        {
+          "productId": "MSFT-M365-BIZ-STD",
+          "sku": "KLQ-00211",
+          "quantity": 25,
+          "price": 12.50
+        }
+      ]
+    }
+  },
+  "response": {
+    "status": 201,
+    "body": {
+      "orderId": "ORD-2026-055891",
+      "customerId": "CUST-10001",
+      "status": "pending",
+      "totalAmount": 312.50,
+      "currency": "USD",
+      "createdAt": "2026-05-03T15:00:00Z",
+      "items": [
+        {
+          "productId": "MSFT-M365-BIZ-STD",
+          "sku": "KLQ-00211",
+          "quantity": 25,
+          "price": 12.50
+        }
+      ]
+    }
+  }
+}

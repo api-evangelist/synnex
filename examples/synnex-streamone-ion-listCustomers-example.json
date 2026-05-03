@@ -1,0 +1,40 @@
+{
+  "request": {
+    "method": "GET",
+    "path": "/accounts/{accountId}/customers",
+    "headers": {
+      "Authorization": "Bearer {ACCESS_TOKEN}"
+    },
+    "parameters": {
+      "accountId": "ACC-RESELLER-001",
+      "page": 1,
+      "pageSize": 25
+    }
+  },
+  "response": {
+    "status": 200,
+    "body": {
+      "items": [
+        {
+          "customerId": "CUST-10001",
+          "companyName": "Acme Restaurant Group",
+          "email": "it@acmerestaurants.com",
+          "country": "US",
+          "status": "active",
+          "createdAt": "2025-09-15T08:00:00Z"
+        },
+        {
+          "customerId": "CUST-10002",
+          "companyName": "BlueSky Tech Solutions",
+          "email": "admin@bluesky.io",
+          "country": "US",
+          "status": "active",
+          "createdAt": "2025-11-01T10:00:00Z"
+        }
+      ],
+      "totalCount": 47,
+      "page": 1,
+      "pageSize": 25
+    }
+  }
+}

@@ -1,0 +1,100 @@
+extends: spectral:oas
+rules:
+  # Require operationId on all operations
+  operation-operationId:
+    description: All operations must have an operationId.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: operationId
+      function: truthy
+
+  # Require summary on all operations
+  operation-summary:
+    description: All operations must have a summary.
+    severity: error
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: summary
+      function: truthy
+
+  # Enforce Title Case on operation summaries
+  operation-summary-title-case:
+    description: Operation summaries must use Title Case.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete].summary"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^[A-Z][a-zA-Z0-9 ]*$"
+
+  # Require tags on all operations
+  operation-tags:
+    description: All operations must have at least one tag.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: tags
+      function: truthy
+
+  # Require description
+  operation-description:
+    description: All operations should have a description.
+    severity: warn
+    given: "$.paths[*][get,post,put,patch,delete]"
+    then:
+      field: description
+      function: truthy
+
+  # Path parameters must be documented
+  path-param-documented:
+    description: All path parameters must have a description.
+    severity: error
+    given: "$.paths[*][*].parameters[?(@.in == 'path')]"
+    then:
+      field: description
+      function: truthy
+
+  # Account ID path parameter must exist for resource endpoints
+  account-id-required:
+    description: Resource endpoints should include accountId path parameter.
+    severity: info
+    given: "$.paths['/accounts/{accountId}/*']"
+    then:
+      function: truthy
+
+  # Require pagination on list operations
+  list-pagination:
+    description: List operations (GET returning arrays) should support pagination parameters.
+    severity: warn
+    given: "$.paths[*].get.parameters"
+    then:
+      function: truthy
+
+  # OAuth2 bearer auth required
+  oauth-security:
+    description: All operations must use OAuth 2.0 bearer token authentication.
+    severity: error
+    given: "$.components.securitySchemes"
+    then:
+      field: bearerAuth
+      function: truthy
+
+  # Response body for 2xx must have schema
+  response-body-schema:
+    description: Successful responses must include a response body schema.
+    severity: warn
+    given: "$.paths[*][*].responses['200','201'].content['application/json']"
+    then:
+      field: schema
+      function: truthy
+
+  # Paths must use kebab-case
+  paths-kebab-case:
+    description: Path segments must use kebab-case.
+    severity: warn
+    given: "$.paths"
+    then:
+      function: pattern
+      functionOptions:
+        match: "^(/[a-z0-9{}-]+)+$"

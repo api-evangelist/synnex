@@ -1,0 +1,32 @@
+{
+  "@context": {
+    "@vocab": "https://schema.org/",
+    "ion": "https://ion.tdsynnex.com/vocab/",
+    "Customer": "schema:Organization",
+    "Subscription": "ion:Subscription",
+    "Order": "schema:Order",
+    "Product": "schema:Product",
+    "customerId": "ion:customerId",
+    "companyName": "schema:legalName",
+    "subscriptionId": "ion:subscriptionId",
+    "productName": "schema:name",
+    "vendor": "schema:manufacturer",
+    "quantity": "schema:orderQuantity",
+    "subscriptionStatus": "ion:subscriptionStatus",
+    "autoRenew": "ion:autoRenew",
+    "renewalDate": {
+      "@id": "ion:renewalDate",
+      "@type": "schema:Date"
+    },
+    "orderId": "schema:orderNumber",
+    "sku": "schema:sku",
+    "currency": "schema:priceCurrency",
+    "totalAmount": "schema:price",
+    "email": "schema:email",
+    "country": "schema:addressCountry",
+    "createdAt": {
+      "@id": "schema:dateCreated",
+      "@type": "schema:DateTime"
+    }
+  }
+}

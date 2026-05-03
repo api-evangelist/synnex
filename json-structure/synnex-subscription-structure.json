@@ -1,0 +1,16 @@
+{
+  "name": "Subscription",
+  "description": "TD SYNNEX cloud subscription structure.",
+  "fields": [
+    { "name": "subscriptionId", "type": "string", "required": true },
+    { "name": "customerId", "type": "string", "required": true },
+    { "name": "productName", "type": "string", "required": true },
+    { "name": "vendor", "type": "string", "required": true },
+    { "name": "sku", "type": "string", "required": false },
+    { "name": "quantity", "type": "integer", "required": true },
+    { "name": "status", "type": "enum", "required": true, "values": ["active", "suspended", "cancelled"] },
+    { "name": "autoRenew", "type": "boolean", "required": false },
+    { "name": "renewalDate", "type": "date", "required": false },
+    { "name": "createdAt", "type": "date-time", "required": false }
+  ]
+}

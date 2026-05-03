@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ion.tdsynnex.com/schemas/customer",
+  "title": "Customer",
+  "description": "A TD SYNNEX end customer account managed by a reseller.",
+  "type": "object",
+  "properties": {
+    "customerId": {
+      "type": "string",
+      "description": "Unique end customer identifier."
+    },
+    "companyName": {
+      "type": "string",
+      "description": "Customer company name."
+    },
+    "email": {
+      "type": "string",
+      "format": "email",
+      "description": "Primary contact email address."
+    },
+    "country": {
+      "type": "string",
+      "description": "ISO 3166-1 alpha-2 country code."
+    },
+    "phone": {
+      "type": "string",
+      "description": "Primary contact phone number."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "inactive"],
+      "description": "Customer account status."
+    },
+    "address": {
+      "type": "object",
+      "properties": {
+        "street": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "postalCode": { "type": "string" },
+        "country": { "type": "string" }
+      }
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["customerId", "companyName", "email", "country", "status"]
+}

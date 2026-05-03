@@ -1,0 +1,605 @@
+openapi: 3.1.0
+info:
+  title: TD SYNNEX StreamOne ION API
+  description: >-
+    The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller
+    partners to manage cloud subscriptions, product catalogs, end customers, and
+    orders through a unified platform. The API uses OAuth 2.0 authentication and
+    supports multi-vendor cloud marketplace operations including Microsoft CSP,
+    Azure, and Google Workspace.
+  version: v3
+  contact:
+    url: https://docs.streamone.cloud/
+servers:
+  - url: https://ion.tdsynnex.com/api/v3
+    description: Production V3 API
+security:
+  - bearerAuth: []
+tags:
+  - name: Customers
+    description: End customer account management.
+  - name: Products
+    description: Product catalog and SKU operations.
+  - name: Orders
+    description: Order creation and management.
+  - name: Subscriptions
+    description: Cloud subscription lifecycle management.
+  - name: Cart
+    description: Shopping cart operations.
+  - name: Reports
+    description: Usage and billing reports.
+paths:
+  /accounts/{accountId}/customers:
+    get:
+      operationId: listCustomers
+      summary: List Customers
+      description: >-
+        Retrieves a list of end customers associated with the reseller account.
+        Supports pagination and filtering.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - name: page
+          in: query
+          schema:
+            type: integer
+        - name: pageSize
+          in: query
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Customer list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCustomer
+      summary: Create Customer
+      description: >-
+        Creates a new end customer account under the reseller organization.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /accounts/{accountId}/customers/{customerId}:
+    get:
+      operationId: getCustomer
+      summary: Get Customer
+      description: Retrieves detailed information about a specific end customer.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Customer details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    put:
+      operationId: updateCustomer
+      summary: Update Customer
+      description: Updates an existing end customer's account information.
+      tags:
+        - Customers
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/customerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /accounts/{accountId}/products:
+    get:
+      operationId: listProducts
+      summary: List Products
+      description: >-
+        Retrieves the product catalog available to the reseller, with filtering
+        by vendor, category, vertical, and currency.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - name: vendor
+          in: query
+          schema:
+            type: string
+          description: Filter by vendor name.
+        - name: category
+          in: query
+          schema:
+            type: string
+        - name: currency
+          in: query
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProductList'
+  /accounts/{accountId}/products/{productId}:
+    get:
+      operationId: getProduct
+      summary: Get Product
+      description: Retrieves detailed information about a specific product including SKUs and pricing.
+      tags:
+        - Products
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+  /accounts/{accountId}/orders:
+    get:
+      operationId: listOrders
+      summary: List Orders
+      description: Retrieves a list of orders for the reseller account.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - name: status
+          in: query
+          schema:
+            type: string
+            enum: [pending, completed, cancelled]
+      responses:
+        '200':
+          description: Order list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderList'
+    post:
+      operationId: createOrder
+      summary: Create Order
+      description: >-
+        Creates a new order for cloud products on behalf of an end customer.
+        Supports new tenants, existing tenants, and subscription updates.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRequest'
+      responses:
+        '201':
+          description: Order created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /accounts/{accountId}/orders/{orderId}:
+    get:
+      operationId: getOrder
+      summary: Get Order
+      description: Retrieves details for a specific order.
+      tags:
+        - Orders
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/orderId'
+      responses:
+        '200':
+          description: Order details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /accounts/{accountId}/customers/{customerId}/subscriptions:
+    get:
+      operationId: listSubscriptions
+      summary: List Subscriptions
+      description: Retrieves cloud subscriptions for a specific end customer.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Subscription list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+  /accounts/{accountId}/customers/{customerId}/subscriptions/{subscriptionId}:
+    get:
+      operationId: getSubscription
+      summary: Get Subscription
+      description: Retrieves details for a specific cloud subscription.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/subscriptionId'
+      responses:
+        '200':
+          description: Subscription details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+    put:
+      operationId: updateSubscription
+      summary: Update Subscription
+      description: >-
+        Updates a subscription's seat count, renewal settings, or status.
+        Supports suspend, reactivate, upgrade, and downgrade operations.
+      tags:
+        - Subscriptions
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - $ref: '#/components/parameters/customerId'
+        - $ref: '#/components/parameters/subscriptionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionUpdate'
+      responses:
+        '200':
+          description: Subscription updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+  /accounts/{accountId}/cart:
+    post:
+      operationId: createCart
+      summary: Create Cart
+      description: Creates a new shopping cart for processing customer orders.
+      tags:
+        - Cart
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartRequest'
+      responses:
+        '201':
+          description: Cart created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+  /accounts/{accountId}/cart/{cartId}/checkout:
+    post:
+      operationId: checkoutCart
+      summary: Checkout Cart
+      description: Processes the cart and converts it to an order.
+      tags:
+        - Cart
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - name: cartId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Checkout completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+  /accounts/{accountId}/reports:
+    get:
+      operationId: listReports
+      summary: List Reports
+      description: Retrieves available reports with metadata for the reseller account.
+      tags:
+        - Reports
+      parameters:
+        - $ref: '#/components/parameters/accountId'
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [json, csv]
+      responses:
+        '200':
+          description: Reports list returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Report'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
+    customerId:
+      name: customerId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: End customer identifier.
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+    subscriptionId:
+      name: subscriptionId
+      in: path
+      required: true
+      schema:
+        type: string
+  schemas:
+    CustomerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: string
+        companyName:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        status:
+          type: string
+          enum: [active, inactive]
+        createdAt:
+          type: string
+          format: date-time
+    CustomerRequest:
+      type: object
+      required:
+        - companyName
+        - email
+        - country
+      properties:
+        companyName:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        phone:
+          type: string
+        address:
+          type: object
+    ProductList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        totalCount:
+          type: integer
+    Product:
+      type: object
+      properties:
+        productId:
+          type: string
+        name:
+          type: string
+        vendor:
+          type: string
+        category:
+          type: string
+        sku:
+          type: string
+        price:
+          type: number
+        currency:
+          type: string
+        description:
+          type: string
+    OrderList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        totalCount:
+          type: integer
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        status:
+          type: string
+          enum: [pending, completed, cancelled]
+        totalAmount:
+          type: number
+        currency:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    OrderRequest:
+      type: object
+      required:
+        - customerId
+        - items
+      properties:
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    OrderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        sku:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+    SubscriptionList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        totalCount:
+          type: integer
+    Subscription:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        productName:
+          type: string
+        vendor:
+          type: string
+        quantity:
+          type: integer
+        status:
+          type: string
+          enum: [active, suspended, cancelled]
+        renewalDate:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+    SubscriptionUpdate:
+      type: object
+      properties:
+        quantity:
+          type: integer
+        status:
+          type: string
+          enum: [active, suspended, cancelled]
+        autoRenew:
+          type: boolean
+    CartRequest:
+      type: object
+      required:
+        - customerId
+      properties:
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    Cart:
+      type: object
+      properties:
+        cartId:
+          type: string
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        totalAmount:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+    Report:
+      type: object
+      properties:
+        reportId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        availableFormats:
+          type: array
+          items:
+            type: string
+        generatedAt:
+          type: string
+          format: date-time

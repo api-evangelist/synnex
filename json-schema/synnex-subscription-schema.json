@@ -1,0 +1,53 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://ion.tdsynnex.com/schemas/subscription",
+  "title": "Subscription",
+  "description": "A cloud software subscription managed through TD SYNNEX StreamOne ION.",
+  "type": "object",
+  "properties": {
+    "subscriptionId": {
+      "type": "string",
+      "description": "Unique subscription identifier."
+    },
+    "customerId": {
+      "type": "string",
+      "description": "End customer identifier."
+    },
+    "productName": {
+      "type": "string",
+      "description": "Name of the subscribed product."
+    },
+    "vendor": {
+      "type": "string",
+      "description": "Product vendor name."
+    },
+    "sku": {
+      "type": "string",
+      "description": "Product SKU identifier."
+    },
+    "quantity": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Number of licensed seats."
+    },
+    "status": {
+      "type": "string",
+      "enum": ["active", "suspended", "cancelled"],
+      "description": "Subscription lifecycle status."
+    },
+    "autoRenew": {
+      "type": "boolean",
+      "description": "Whether the subscription auto-renews."
+    },
+    "renewalDate": {
+      "type": "string",
+      "format": "date",
+      "description": "Next renewal date."
+    },
+    "createdAt": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "required": ["subscriptionId", "customerId", "productName", "vendor", "quantity", "status"]
+}

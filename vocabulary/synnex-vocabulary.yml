@@ -1,0 +1,93 @@
+vocabulary:
+  name: TD SYNNEX API Vocabulary
+  description: >-
+    Vocabulary for TD SYNNEX StreamOne ION and IT distribution APIs, covering
+    cloud marketplace, subscription management, reseller operations, and partner integration.
+  version: '1.0'
+  created: '2026-05-03'
+  terms:
+    - term: StreamOne ION
+      definition: >-
+        TD SYNNEX's cloud marketplace platform that serves as an interface between
+        cloud vendors and reseller partners for managing cloud subscriptions and orders.
+      tags:
+        - Platform
+        - Cloud Marketplace
+        - Partner
+
+    - term: Reseller
+      definition: >-
+        A TD SYNNEX partner organization that purchases and resells cloud products
+        and services to end customers through the StreamOne ION platform.
+      tags:
+        - Partner
+        - Distribution
+        - Channel
+
+    - term: End Customer
+      definition: >-
+        The final organization or business that uses cloud services purchased
+        through a TD SYNNEX reseller partner.
+      tags:
+        - Customer
+        - Account Management
+        - Cloud
+
+    - term: Subscription
+      definition: >-
+        A cloud software license or service entitlement with a defined quantity,
+        renewal date, and lifecycle status managed through StreamOne ION.
+      tags:
+        - Cloud
+        - SaaS
+        - Licensing
+
+    - term: Account ID
+      definition: >-
+        The unique identifier for a TD SYNNEX reseller account, required as a
+        path parameter for all ION API operations.
+      tags:
+        - Identity
+        - Authentication
+        - Account
+
+    - term: SKU
+      definition: >-
+        Stock Keeping Unit — the vendor-specific product identifier used to
+        uniquely identify a purchasable cloud product variant in TD SYNNEX.
+      tags:
+        - Product
+        - Catalog
+        - Identification
+
+    - term: Provisioning Template
+      definition: >-
+        A pre-configured set of parameters for creating cloud service instances
+        through TD SYNNEX, available by vendor or template ID.
+      tags:
+        - Cloud
+        - Automation
+        - Configuration
+
+    - term: OAuth 2.0
+      definition: >-
+        The authentication protocol used by StreamOne ION V3 API, requiring
+        resellers to obtain and refresh bearer tokens for API access.
+      tags:
+        - Security
+        - Authentication
+        - OAuth
+
+  dimensions:
+    operational:
+      - Customer Onboarding
+      - Product Catalog Management
+      - Order Processing
+      - Subscription Lifecycle
+      - Billing and Reporting
+    capability:
+      - Cloud Marketplace Operations
+      - Reseller Partner Enablement
+      - IT Distribution Automation
+      - Multi-Vendor Cloud Management
+      - Subscription Billing
