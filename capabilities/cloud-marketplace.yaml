@@ -1,237 +1,391 @@
-naftiko: "1.0.0-alpha1"
-
+naftiko: 1.0.0-alpha2
 info:
-  label: "TD SYNNEX Cloud Marketplace"
-  description: >-
-    Unified cloud marketplace capability for TD SYNNEX resellers. Combines customer
-    management, product catalog browsing, order creation, subscription lifecycle
-    management, and reporting through the StreamOne ION API. Enables resellers to
-    automate cloud subscription operations for Microsoft, Google, and other vendor products.
+  label: TD SYNNEX Cloud Marketplace
+  description: Unified cloud marketplace capability for TD SYNNEX resellers. Combines customer management, product catalog
+    browsing, order creation, subscription lifecycle management, and reporting through the StreamOne ION API. Enables resellers
+    to automate cloud subscription operations for Microsoft, Google, and other vendor products.
   tags:
-    - TD SYNNEX
-    - Cloud Marketplace
-    - Subscription Management
-    - IT Distribution
-    - Order Management
-  created: "2026-05-03"
-  modified: "2026-05-03"
-
+  - TD SYNNEX
+  - Cloud Marketplace
+  - Subscription Management
+  - IT Distribution
+  - Order Management
+  created: '2026-05-03'
+  modified: '2026-05-06'
 binds:
-  - namespace: env
-    keys:
-      SYNNEX_ION_ACCESS_TOKEN: SYNNEX_ION_ACCESS_TOKEN
-      SYNNEX_ACCOUNT_ID: SYNNEX_ACCOUNT_ID
-
+- namespace: env
+  keys:
+    SYNNEX_ION_ACCESS_TOKEN: SYNNEX_ION_ACCESS_TOKEN
+    SYNNEX_ACCOUNT_ID: SYNNEX_ACCOUNT_ID
 capability:
   consumes:
-    - import: synnex-ion
-      location: ./shared/streamone-ion.yaml
-
+  - type: http
+    namespace: synnex-ion
+    baseUri: https://ion.tdsynnex.com/api/v3
+    description: TD SYNNEX StreamOne ION V3 API for cloud subscription management.
+    authentication:
+      type: bearer
+      token: '{{SYNNEX_ION_ACCESS_TOKEN}}'
+    resources:
+    - name: customers
+      path: /accounts/{accountId}/customers
+      description: End customer account management.
+      operations:
+      - name: list-customers
+        method: GET
+        description: Retrieves a list of end customers for the reseller account.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: page
+          in: query
+          type: integer
+          required: false
+        - name: pageSize
+          in: query
+          type: integer
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-customer
+        method: POST
+        description: Creates a new end customer account.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: companyName
+          in: body
+          type: string
+          required: true
+        - name: email
+          in: body
+          type: string
+          required: true
+        - name: country
+          in: body
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            companyName: '{{tools.companyName}}'
+            email: '{{tools.email}}'
+            country: '{{tools.country}}'
+    - name: products
+      path: /accounts/{accountId}/products
+      description: Product catalog operations.
+      operations:
+      - name: list-products
+        method: GET
+        description: Retrieves the product catalog available to the reseller.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: vendor
+          in: query
+          type: string
+          required: false
+        - name: category
+          in: query
+          type: string
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: orders
+      path: /accounts/{accountId}/orders
+      description: Order management operations.
+      operations:
+      - name: list-orders
+        method: GET
+        description: Retrieves a list of orders for the reseller account.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: status
+          in: query
+          type: string
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: create-order
+        method: POST
+        description: Creates a new order for cloud products on behalf of an end customer.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: customerId
+          in: body
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        body:
+          type: json
+          data:
+            customerId: '{{tools.customerId}}'
+    - name: subscriptions
+      path: /accounts/{accountId}/customers/{customerId}/subscriptions
+      description: Cloud subscription lifecycle management.
+      operations:
+      - name: list-subscriptions
+        method: GET
+        description: Retrieves cloud subscriptions for a specific end customer.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: customerId
+          in: path
+          type: string
+          required: true
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: reports
+      path: /accounts/{accountId}/reports
+      description: Usage and billing reports.
+      operations:
+      - name: list-reports
+        method: GET
+        description: Retrieves available reports with metadata.
+        inputParameters:
+        - name: accountId
+          in: path
+          type: string
+          required: true
+        - name: format
+          in: query
+          type: string
+          required: false
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
   exposes:
-    - type: rest
-      port: 8080
-      namespace: synnex-cloud-marketplace-api
-      description: "Unified REST API for TD SYNNEX cloud marketplace operations."
-      resources:
-        - path: /v1/customers
-          name: customers
-          description: "End customer account management."
-          operations:
-            - method: GET
-              name: list-customers
-              description: "List all end customers for the reseller account."
-              call: "synnex-ion.list-customers"
-              with:
-                accountId: "rest.accountId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: POST
-              name: create-customer
-              description: "Create a new end customer account."
-              call: "synnex-ion.create-customer"
-              with:
-                accountId: "rest.accountId"
-                companyName: "rest.companyName"
-                email: "rest.email"
-                country: "rest.country"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/products
-          name: products
-          description: "Cloud product catalog."
-          operations:
-            - method: GET
-              name: list-products
-              description: "Browse available cloud products and SKUs."
-              call: "synnex-ion.list-products"
-              with:
-                accountId: "rest.accountId"
-                vendor: "rest.vendor"
-                category: "rest.category"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/orders
-          name: orders
-          description: "Order management."
-          operations:
-            - method: GET
-              name: list-orders
-              description: "List orders for the reseller account."
-              call: "synnex-ion.list-orders"
-              with:
-                accountId: "rest.accountId"
-                status: "rest.status"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-            - method: POST
-              name: create-order
-              description: "Create a new cloud product order for a customer."
-              call: "synnex-ion.create-order"
-              with:
-                accountId: "rest.accountId"
-                customerId: "rest.customerId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/subscriptions
-          name: subscriptions
-          description: "Cloud subscription management."
-          operations:
-            - method: GET
-              name: list-subscriptions
-              description: "List cloud subscriptions for an end customer."
-              call: "synnex-ion.list-subscriptions"
-              with:
-                accountId: "rest.accountId"
-                customerId: "rest.customerId"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-        - path: /v1/reports
-          name: reports
-          description: "Usage and billing reports."
-          operations:
-            - method: GET
-              name: list-reports
-              description: "List available usage and billing reports."
-              call: "synnex-ion.list-reports"
-              with:
-                accountId: "rest.accountId"
-                format: "rest.format"
-              outputParameters:
-                - type: object
-                  mapping: "$."
-
-    - type: mcp
-      port: 9090
-      namespace: synnex-cloud-marketplace-mcp
-      transport: http
-      description: "MCP server for AI-assisted cloud marketplace operations via TD SYNNEX StreamOne ION."
-      tools:
-        - name: list-customers
-          description: "List end customers managed by the reseller in the TD SYNNEX cloud marketplace."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "synnex-ion.list-customers"
-          with:
-            accountId: "tools.accountId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: create-customer
-          description: "Create a new end customer account in the TD SYNNEX cloud marketplace."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synnex-ion.create-customer"
-          with:
-            accountId: "tools.accountId"
-            companyName: "tools.companyName"
-            email: "tools.email"
-            country: "tools.country"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-products
-          description: "Browse the TD SYNNEX cloud product catalog with filtering by vendor and category."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "synnex-ion.list-products"
-          with:
-            accountId: "tools.accountId"
-            vendor: "tools.vendor"
-            category: "tools.category"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-orders
-          description: "List cloud product orders for the reseller account."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "synnex-ion.list-orders"
-          with:
-            accountId: "tools.accountId"
-            status: "tools.status"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: create-order
-          description: "Create a new cloud product order for an end customer through TD SYNNEX."
-          hints:
-            readOnly: false
-            destructive: false
-            idempotent: false
-          call: "synnex-ion.create-order"
-          with:
-            accountId: "tools.accountId"
-            customerId: "tools.customerId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-subscriptions
-          description: "List active cloud subscriptions for an end customer."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "synnex-ion.list-subscriptions"
-          with:
-            accountId: "tools.accountId"
-            customerId: "tools.customerId"
-          outputParameters:
-            - type: object
-              mapping: "$."
-
-        - name: list-reports
-          description: "List available usage and billing reports for the reseller account."
-          hints:
-            readOnly: true
-            destructive: false
-            idempotent: true
-          call: "synnex-ion.list-reports"
-          with:
-            accountId: "tools.accountId"
-            format: "tools.format"
-          outputParameters:
-            - type: object
-              mapping: "$."
+  - type: rest
+    port: 8080
+    namespace: synnex-cloud-marketplace-api
+    description: Unified REST API for TD SYNNEX cloud marketplace operations.
+    resources:
+    - path: /v1/customers
+      name: customers
+      description: End customer account management.
+      operations:
+      - method: GET
+        name: list-customers
+        description: List all end customers for the reseller account.
+        call: synnex-ion.list-customers
+        with:
+          accountId: rest.accountId
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create-customer
+        description: Create a new end customer account.
+        call: synnex-ion.create-customer
+        with:
+          accountId: rest.accountId
+          companyName: rest.companyName
+          email: rest.email
+          country: rest.country
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/products
+      name: products
+      description: Cloud product catalog.
+      operations:
+      - method: GET
+        name: list-products
+        description: Browse available cloud products and SKUs.
+        call: synnex-ion.list-products
+        with:
+          accountId: rest.accountId
+          vendor: rest.vendor
+          category: rest.category
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/orders
+      name: orders
+      description: Order management.
+      operations:
+      - method: GET
+        name: list-orders
+        description: List orders for the reseller account.
+        call: synnex-ion.list-orders
+        with:
+          accountId: rest.accountId
+          status: rest.status
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: POST
+        name: create-order
+        description: Create a new cloud product order for a customer.
+        call: synnex-ion.create-order
+        with:
+          accountId: rest.accountId
+          customerId: rest.customerId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/subscriptions
+      name: subscriptions
+      description: Cloud subscription management.
+      operations:
+      - method: GET
+        name: list-subscriptions
+        description: List cloud subscriptions for an end customer.
+        call: synnex-ion.list-subscriptions
+        with:
+          accountId: rest.accountId
+          customerId: rest.customerId
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/reports
+      name: reports
+      description: Usage and billing reports.
+      operations:
+      - method: GET
+        name: list-reports
+        description: List available usage and billing reports.
+        call: synnex-ion.list-reports
+        with:
+          accountId: rest.accountId
+          format: rest.format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    port: 9090
+    namespace: synnex-cloud-marketplace-mcp
+    transport: http
+    description: MCP server for AI-assisted cloud marketplace operations via TD SYNNEX StreamOne ION.
+    tools:
+    - name: list-customers
+      description: List end customers managed by the reseller in the TD SYNNEX cloud marketplace.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: synnex-ion.list-customers
+      with:
+        accountId: tools.accountId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-customer
+      description: Create a new end customer account in the TD SYNNEX cloud marketplace.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synnex-ion.create-customer
+      with:
+        accountId: tools.accountId
+        companyName: tools.companyName
+        email: tools.email
+        country: tools.country
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-products
+      description: Browse the TD SYNNEX cloud product catalog with filtering by vendor and category.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: synnex-ion.list-products
+      with:
+        accountId: tools.accountId
+        vendor: tools.vendor
+        category: tools.category
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-orders
+      description: List cloud product orders for the reseller account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: synnex-ion.list-orders
+      with:
+        accountId: tools.accountId
+        status: tools.status
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: create-order
+      description: Create a new cloud product order for an end customer through TD SYNNEX.
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: false
+      call: synnex-ion.create-order
+      with:
+        accountId: tools.accountId
+        customerId: tools.customerId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-subscriptions
+      description: List active cloud subscriptions for an end customer.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: synnex-ion.list-subscriptions
+      with:
+        accountId: tools.accountId
+        customerId: tools.customerId
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: list-reports
+      description: List available usage and billing reports for the reseller account.
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: synnex-ion.list-reports
+      with:
+        accountId: tools.accountId
+        format: tools.format
+      outputParameters:
+      - type: object
+        mapping: $.
