@@ -1,0 +1,78 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: TD SYNNEX StreamOne ION API — Reports
+  description: 'TD SYNNEX StreamOne ION API — Reports. 1 operations. Lead operation: List Reports. Self-contained Naftiko
+    capability covering one Synnex business surface.'
+  tags:
+  - Synnex
+  - Reports
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SYNNEX_API_KEY: SYNNEX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: streamone-ion-reports
+    baseUri: https://ion.tdsynnex.com/api/v3
+    description: TD SYNNEX StreamOne ION API — Reports business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts-accountId-reports
+      path: /accounts/{accountId}/reports
+      operations:
+      - name: listreports
+        method: GET
+        description: List Reports
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: format
+          in: query
+          type: string
+    authentication:
+      type: bearer
+      token: '{{env.SYNNEX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: streamone-ion-reports-rest
+    port: 8080
+    description: REST adapter for TD SYNNEX StreamOne ION API — Reports. One Spectral-compliant resource per consumed operation,
+      prefixed with /v1.
+    resources:
+    - path: /v1/accounts/{accountid}/reports
+      name: accounts-accountid-reports
+      description: REST surface for accounts-accountId-reports.
+      operations:
+      - method: GET
+        name: listreports
+        description: List Reports
+        call: streamone-ion-reports.listreports
+        with:
+          format: rest.format
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: streamone-ion-reports-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for TD SYNNEX StreamOne ION API — Reports. One tool per consumed operation, routed inline through
+      this capability's consumes block.
+    tools:
+    - name: list-reports
+      description: List Reports
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: streamone-ion-reports.listreports
+      with:
+        format: tools.format
+      outputParameters:
+      - type: object
+        mapping: $.

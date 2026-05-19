@@ -1,0 +1,137 @@
+naftiko: 1.0.0-alpha2
+info:
+  label: TD SYNNEX StreamOne ION API — Subscriptions
+  description: 'TD SYNNEX StreamOne ION API — Subscriptions. 3 operations. Lead operation: List Subscriptions. Self-contained
+    Naftiko capability covering one Synnex business surface.'
+  tags:
+  - Synnex
+  - Subscriptions
+  created: '2026-05-19'
+  modified: '2026-05-19'
+binds:
+- namespace: env
+  keys:
+    SYNNEX_API_KEY: SYNNEX_API_KEY
+capability:
+  consumes:
+  - type: http
+    namespace: streamone-ion-subscriptions
+    baseUri: https://ion.tdsynnex.com/api/v3
+    description: TD SYNNEX StreamOne ION API — Subscriptions business capability. Self-contained, no shared references.
+    resources:
+    - name: accounts-accountId-customers-customerId-subscriptions
+      path: /accounts/{accountId}/customers/{customerId}/subscriptions
+      operations:
+      - name: listsubscriptions
+        method: GET
+        description: List Subscriptions
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+    - name: accounts-accountId-customers-customerId-subscriptions-subscriptionId
+      path: /accounts/{accountId}/customers/{customerId}/subscriptions/{subscriptionId}
+      operations:
+      - name: getsubscription
+        method: GET
+        description: Get Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+      - name: updatesubscription
+        method: PUT
+        description: Update Subscription
+        outputRawFormat: json
+        outputParameters:
+        - name: result
+          type: object
+          value: $.
+        inputParameters:
+        - name: body
+          in: body
+          type: object
+          description: Request body (JSON).
+          required: true
+    authentication:
+      type: bearer
+      token: '{{env.SYNNEX_API_KEY}}'
+  exposes:
+  - type: rest
+    namespace: streamone-ion-subscriptions-rest
+    port: 8080
+    description: REST adapter for TD SYNNEX StreamOne ION API — Subscriptions. One Spectral-compliant resource per consumed
+      operation, prefixed with /v1.
+    resources:
+    - path: /v1/accounts/{accountid}/customers/{customerid}/subscriptions
+      name: accounts-accountid-customers-customerid-subscriptions
+      description: REST surface for accounts-accountId-customers-customerId-subscriptions.
+      operations:
+      - method: GET
+        name: listsubscriptions
+        description: List Subscriptions
+        call: streamone-ion-subscriptions.listsubscriptions
+        outputParameters:
+        - type: object
+          mapping: $.
+    - path: /v1/accounts/{accountid}/customers/{customerid}/subscriptions/{subscriptionid}
+      name: accounts-accountid-customers-customerid-subscriptions-subscriptionid
+      description: REST surface for accounts-accountId-customers-customerId-subscriptions-subscriptionId.
+      operations:
+      - method: GET
+        name: getsubscription
+        description: Get Subscription
+        call: streamone-ion-subscriptions.getsubscription
+        outputParameters:
+        - type: object
+          mapping: $.
+      - method: PUT
+        name: updatesubscription
+        description: Update Subscription
+        call: streamone-ion-subscriptions.updatesubscription
+        with:
+          body: rest.body
+        outputParameters:
+        - type: object
+          mapping: $.
+  - type: mcp
+    namespace: streamone-ion-subscriptions-mcp
+    port: 9090
+    transport: http
+    description: MCP adapter for TD SYNNEX StreamOne ION API — Subscriptions. One tool per consumed operation, routed inline
+      through this capability's consumes block.
+    tools:
+    - name: list-subscriptions
+      description: List Subscriptions
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: streamone-ion-subscriptions.listsubscriptions
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: get-subscription
+      description: Get Subscription
+      hints:
+        readOnly: true
+        destructive: false
+        idempotent: true
+      call: streamone-ion-subscriptions.getsubscription
+      outputParameters:
+      - type: object
+        mapping: $.
+    - name: update-subscription
+      description: Update Subscription
+      hints:
+        readOnly: false
+        destructive: false
+        idempotent: true
+      call: streamone-ion-subscriptions.updatesubscription
+      with:
+        body: tools.body
+      outputParameters:
+      - type: object
+        mapping: $.
