@@ -1,93 +1,74 @@
-# Synnex (TD SYNNEX)
+# Synnex (synnex)
 
-SYNNEX Corporation (now TD SYNNEX) is a Fortune 100 global IT distribution company and solutions aggregator that connects technology vendors with resellers, system integrators, and enterprise customers. TD SYNNEX was formed in 2021 through the merger of Synnex Corporation and Tech Data.
+SYNNEX Corporation (now TD SYNNEX) is a Fortune 100 global IT distribution company and solutions aggregator that connects technology vendors with resellers, system integrators, and enterprise customers. The company provides comprehensive API access through its StreamOne ION platform for managing cloud subscriptions, product catalogs, customer accounts, and orders. TD SYNNEX was formed in 2021 through the merger of Synnex Corporation and Tech Data.
 
-**Type:** Company (Fortune 100)
-**Website:** [tdsynnex.com](https://www.tdsynnex.com)
-**API Documentation:** [docs.streamone.cloud](https://docs.streamone.cloud/)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/synnex/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/synnex/refs/heads/main/apis.yml)
+
+## Tags
+
+- Technology Distribution
+- IT Distribution
+- Cloud Marketplace
+- Fortune 100
+- Supply Chain
+
+## Timestamps
+
+- **Created:** 2026-05-03
+- **Modified:** 2026-05-19
 
 ## APIs
 
-### StreamOne ION API
+### TD SYNNEX StreamOne ION API
 
-The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders. Uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations.
+The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API supports end customer management, product operations, order management, subscription lifecycle, shopping cart workflows, and reporting via OAuth 2.0 authentication.
 
-- **Documentation:** [docs.streamone.cloud](https://docs.streamone.cloud/)
-- **OpenAPI:** [openapi/synnex-streamone-ion-openapi.yml](openapi/synnex-streamone-ion-openapi.yml)
+- **Human URL:** [https://www.tdsynnex.com/ion/api/](https://www.tdsynnex.com/ion/api/)
 - **Base URL:** `https://ion.tdsynnex.com/api/v3`
 
-| Method | Path | Summary |
-|--------|------|---------|
-| GET | /accounts/{accountId}/customers | List Customers |
-| POST | /accounts/{accountId}/customers | Create Customer |
-| GET | /accounts/{accountId}/customers/{customerId} | Get Customer |
-| PUT | /accounts/{accountId}/customers/{customerId} | Update Customer |
-| GET | /accounts/{accountId}/products | List Products |
-| GET | /accounts/{accountId}/products/{productId} | Get Product |
-| GET | /accounts/{accountId}/orders | List Orders |
-| POST | /accounts/{accountId}/orders | Create Order |
-| GET | /accounts/{accountId}/orders/{orderId} | Get Order |
-| GET | /accounts/{accountId}/customers/{customerId}/subscriptions | List Subscriptions |
-| GET | /accounts/{accountId}/customers/{customerId}/subscriptions/{subscriptionId} | Get Subscription |
-| PUT | /accounts/{accountId}/customers/{customerId}/subscriptions/{subscriptionId} | Update Subscription |
-| POST | /accounts/{accountId}/cart | Create Cart |
-| POST | /accounts/{accountId}/cart/{cartId}/checkout | Checkout Cart |
-| GET | /accounts/{accountId}/reports | List Reports |
+#### Tags
 
-### Digital Bridge API
-
-The Digital Bridge Developer Portal gives engineering teams direct access to REST APIs for products, pricing, orders, renewals, and cloud services.
-
-- **Documentation:** [tdsynnex.com/na/us/digital-bridge](https://www.tdsynnex.com/na/us/digital-bridge/)
-
-## Naftiko Capabilities
-
-### Shared Definitions
-
-| File | Description |
-|------|-------------|
-| [capabilities/shared/streamone-ion.yaml](capabilities/shared/streamone-ion.yaml) | StreamOne ION API consumed definition |
-
-### Workflow Capabilities
-
-| Capability | Description | Tools |
-|-----------|-------------|-------|
-| [cloud-marketplace.yaml](capabilities/cloud-marketplace.yaml) | Unified cloud marketplace operations (customers + products + orders + subscriptions + reports) | 7 tools |
-
-## Artifacts
-
-| Type | File |
-|------|------|
-| OpenAPI | [openapi/synnex-streamone-ion-openapi.yml](openapi/synnex-streamone-ion-openapi.yml) |
-| Spectral Rules | [rules/synnex-rules.yml](rules/synnex-rules.yml) |
-| JSON Schema | [json-schema/synnex-customer-schema.json](json-schema/synnex-customer-schema.json) |
-| JSON Schema | [json-schema/synnex-subscription-schema.json](json-schema/synnex-subscription-schema.json) |
-| JSON Structure | [json-structure/synnex-subscription-structure.json](json-structure/synnex-subscription-structure.json) |
-| JSON-LD Context | [json-ld/synnex-context.jsonld](json-ld/synnex-context.jsonld) |
-| Vocabulary | [vocabulary/synnex-vocabulary.yml](vocabulary/synnex-vocabulary.yml) |
-
-## Examples
-
-| File | Description |
-|------|-------------|
-| [examples/synnex-streamone-ion-listCustomers-example.json](examples/synnex-streamone-ion-listCustomers-example.json) | List customers response |
-| [examples/synnex-streamone-ion-createOrder-example.json](examples/synnex-streamone-ion-createOrder-example.json) | Create order request/response |
-
-## Features
-
-- OAuth 2.0 Authentication
-- End Customer Management
-- Multi-Vendor Product Catalog
+- Cloud Marketplace
+- IT Distribution
+- Subscription Management
 - Order Management
-- Subscription Lifecycle Management (suspend, reactivate, upgrade)
-- Shopping Cart Operations
-- Cloud Provider Account Management
-- Reporting and Data Export (JSON/CSV)
-- Swagger/OpenAPI Testing Interface
-- Sandbox Environment
-- Multi-Currency and Multi-Language Support
+- Partner API
 
-## Maintainers
+#### Properties
 
-**FN:** API Evangelist
-**Email:** info@apievangelist.com
+- [Documentation](https://docs.streamone.cloud/)
+- [OpenAPI](openapi/synnex-streamone-ion-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+- [Postman Collection](collections/synnex-streamone-ion.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/synnex-streamone-ion.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+### TD SYNNEX Digital Bridge API
+
+The Digital Bridge Developer Portal gives engineering teams direct access to REST APIs for products, pricing, orders, renewals, and cloud services. Partners can get sandbox API keys, test endpoints, and integrate live TD SYNNEX data into any workflow or system.
+
+- **Human URL:** [https://www.tdsynnex.com/na/us/digital-bridge/](https://www.tdsynnex.com/na/us/digital-bridge/)
+- **Base URL:** `https://api.tdsynnex.com`
+
+#### Tags
+
+- IT Distribution
+- Products
+- Pricing
+- Orders
+- Partner Integration
+
+#### Properties
+
+- [Documentation](https://www.tdsynnex.com/na/us/digital-bridge/)
+- [Developer Portal](https://www.tdsynnex.com/na/us/digital-bridge/)
+- [Postman Collection](collections/synnex-streamone-ion.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/synnex-streamone-ion.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+
+## Common Properties
+
+- [LinkedIn](https://www.linkedin.com/company/tdsynnex)
+- [Website](https://www.tdsynnex.com)
+- [Developer Portal](https://www.tdsynnex.com/ion/api/)
+- [A P I Documentation](https://docs.streamone.cloud/)
+- [Git Hub Org](https://github.com/cloudmindsab/td-synnex)
+- [J S O N L D Context](json-ld/synnex-context.jsonld)
+- [Vocabulary](vocabulary/synnex-vocabulary.yml)
