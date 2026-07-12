@@ -55,6 +55,10 @@ apis:
       - type: DeveloperPortal
         url: https://www.tdsynnex.com/na/us/digital-bridge/
 common:
+  - type: DomainSecurity
+    url: security/synnex-domain-security.yml
+  - type: Authentication
+    url: authentication/synnex-authentication.yml
   - type: LinkedIn
     url: https://www.linkedin.com/company/tdsynnex
   - type: Website
