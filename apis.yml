@@ -55,6 +55,8 @@ apis:
       - type: DeveloperPortal
         url: https://www.tdsynnex.com/na/us/digital-bridge/
 common:
+  - type: AgenticAccess
+    url: agentic-access/synnex-agentic-access.yml
   - type: DomainSecurity
     url: security/synnex-domain-security.yml
   - type: Authentication
