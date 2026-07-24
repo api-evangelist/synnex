@@ -1,0 +1,175 @@
+openapi: 3.1.0
+info:
+  title: TD SYNNEX StreamOne ION Cart Customers API
+  description: The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.
+  version: v3
+  contact:
+    url: https://docs.streamone.cloud/
+servers:
+- url: https://ion.tdsynnex.com/api/v3
+  description: Production V3 API
+security:
+- bearerAuth: []
+tags:
+- name: Customers
+  description: End customer account management.
+paths:
+  /accounts/{accountId}/customers:
+    get:
+      operationId: listCustomers
+      summary: List Customers
+      description: Retrieves a list of end customers associated with the reseller account. Supports pagination and filtering.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - name: page
+        in: query
+        schema:
+          type: integer
+      - name: pageSize
+        in: query
+        schema:
+          type: integer
+      responses:
+        '200':
+          description: Customer list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerList'
+        '401':
+          description: Unauthorized
+    post:
+      operationId: createCustomer
+      summary: Create Customer
+      description: Creates a new end customer account under the reseller organization.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '201':
+          description: Customer created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+  /accounts/{accountId}/customers/{customerId}:
+    get:
+      operationId: getCustomer
+      summary: Get Customer
+      description: Retrieves detailed information about a specific end customer.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Customer details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+    put:
+      operationId: updateCustomer
+      summary: Update Customer
+      description: Updates an existing end customer's account information.
+      tags:
+      - Customers
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/customerId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomerRequest'
+      responses:
+        '200':
+          description: Customer updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Customer'
+components:
+  schemas:
+    Customer:
+      type: object
+      properties:
+        customerId:
+          type: string
+        companyName:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        status:
+          type: string
+          enum:
+          - active
+          - inactive
+        createdAt:
+          type: string
+          format: date-time
+    CustomerRequest:
+      type: object
+      required:
+      - companyName
+      - email
+      - country
+      properties:
+        companyName:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        phone:
+          type: string
+        address:
+          type: object
+    CustomerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
+    customerId:
+      name: customerId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: End customer identifier.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token

@@ -1,0 +1,136 @@
+openapi: 3.1.0
+info:
+  title: TD SYNNEX StreamOne ION Cart API
+  description: The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.
+  version: v3
+  contact:
+    url: https://docs.streamone.cloud/
+servers:
+- url: https://ion.tdsynnex.com/api/v3
+  description: Production V3 API
+security:
+- bearerAuth: []
+tags:
+- name: Cart
+  description: Shopping cart operations.
+paths:
+  /accounts/{accountId}/cart:
+    post:
+      operationId: createCart
+      summary: Create Cart
+      description: Creates a new shopping cart for processing customer orders.
+      tags:
+      - Cart
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CartRequest'
+      responses:
+        '201':
+          description: Cart created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Cart'
+  /accounts/{accountId}/cart/{cartId}/checkout:
+    post:
+      operationId: checkoutCart
+      summary: Checkout Cart
+      description: Processes the cart and converts it to an order.
+      tags:
+      - Cart
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - name: cartId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Checkout completed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Order'
+components:
+  schemas:
+    Cart:
+      type: object
+      properties:
+        cartId:
+          type: string
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        totalAmount:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
+    CartRequest:
+      type: object
+      required:
+      - customerId
+      properties:
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - completed
+          - cancelled
+        totalAmount:
+          type: number
+        currency:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+    OrderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        sku:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token

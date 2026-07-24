@@ -1,0 +1,72 @@
+openapi: 3.1.0
+info:
+  title: TD SYNNEX StreamOne ION Cart Reports API
+  description: The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.
+  version: v3
+  contact:
+    url: https://docs.streamone.cloud/
+servers:
+- url: https://ion.tdsynnex.com/api/v3
+  description: Production V3 API
+security:
+- bearerAuth: []
+tags:
+- name: Reports
+  description: Usage and billing reports.
+paths:
+  /accounts/{accountId}/reports:
+    get:
+      operationId: listReports
+      summary: List Reports
+      description: Retrieves available reports with metadata for the reseller account.
+      tags:
+      - Reports
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - name: format
+        in: query
+        schema:
+          type: string
+          enum:
+          - json
+          - csv
+      responses:
+        '200':
+          description: Reports list returned
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Report'
+components:
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
+  schemas:
+    Report:
+      type: object
+      properties:
+        reportId:
+          type: string
+        name:
+          type: string
+        description:
+          type: string
+        availableFormats:
+          type: array
+          items:
+            type: string
+        generatedAt:
+          type: string
+          format: date-time
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token

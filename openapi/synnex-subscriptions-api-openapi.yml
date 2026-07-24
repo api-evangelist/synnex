@@ -1,0 +1,147 @@
+openapi: 3.1.0
+info:
+  title: TD SYNNEX StreamOne ION Cart Subscriptions API
+  description: The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.
+  version: v3
+  contact:
+    url: https://docs.streamone.cloud/
+servers:
+- url: https://ion.tdsynnex.com/api/v3
+  description: Production V3 API
+security:
+- bearerAuth: []
+tags:
+- name: Subscriptions
+  description: Cloud subscription lifecycle management.
+paths:
+  /accounts/{accountId}/customers/{customerId}/subscriptions:
+    get:
+      operationId: listSubscriptions
+      summary: List Subscriptions
+      description: Retrieves cloud subscriptions for a specific end customer.
+      tags:
+      - Subscriptions
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/customerId'
+      responses:
+        '200':
+          description: Subscription list returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SubscriptionList'
+  /accounts/{accountId}/customers/{customerId}/subscriptions/{subscriptionId}:
+    get:
+      operationId: getSubscription
+      summary: Get Subscription
+      description: Retrieves details for a specific cloud subscription.
+      tags:
+      - Subscriptions
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/customerId'
+      - $ref: '#/components/parameters/subscriptionId'
+      responses:
+        '200':
+          description: Subscription details returned
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+    put:
+      operationId: updateSubscription
+      summary: Update Subscription
+      description: Updates a subscription's seat count, renewal settings, or status. Supports suspend, reactivate, upgrade, and downgrade operations.
+      tags:
+      - Subscriptions
+      parameters:
+      - $ref: '#/components/parameters/accountId'
+      - $ref: '#/components/parameters/customerId'
+      - $ref: '#/components/parameters/subscriptionId'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SubscriptionUpdate'
+      responses:
+        '200':
+          description: Subscription updated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Subscription'
+components:
+  schemas:
+    Subscription:
+      type: object
+      properties:
+        subscriptionId:
+          type: string
+        productName:
+          type: string
+        vendor:
+          type: string
+        quantity:
+          type: integer
+        status:
+          type: string
+          enum:
+          - active
+          - suspended
+          - cancelled
+        renewalDate:
+          type: string
+          format: date
+        createdAt:
+          type: string
+          format: date-time
+    SubscriptionList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Subscription'
+        totalCount:
+          type: integer
+    SubscriptionUpdate:
+      type: object
+      properties:
+        quantity:
+          type: integer
+        status:
+          type: string
+          enum:
+          - active
+          - suspended
+          - cancelled
+        autoRenew:
+          type: boolean
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
+    subscriptionId:
+      name: subscriptionId
+      in: path
+      required: true
+      schema:
+        type: string
+    customerId:
+      name: customerId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: End customer identifier.
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: OAuth 2.0 bearer token
