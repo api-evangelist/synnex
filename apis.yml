@@ -1,4 +1,18 @@
 aid: synnex
+accessModel:
+  pricing: enterprise
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Enterprise · Self-serve signup
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/synnex.png
 name: Synnex
 description: >-
   SYNNEX Corporation (now TD SYNNEX) is a Fortune 100 global IT distribution company and solutions aggregator that
@@ -15,45 +29,97 @@ tags:
   - Fortune 100
   - Supply Chain
 apis:
-  - aid: synnex:streamone-ion
-    name: TD SYNNEX StreamOne ION API
-    description: >-
-      The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud
-      subscriptions, product catalogs, end customers, and orders through a unified platform. The API supports end
-      customer management, product operations, order management, subscription lifecycle, shopping cart workflows, and
-      reporting via OAuth 2.0 authentication.
-    humanURL: https://www.tdsynnex.com/ion/api/
-    baseURL: https://ion.tdsynnex.com/api/v3
-    tags:
-      - Cloud Marketplace
-      - IT Distribution
-      - Subscription Management
-      - Order Management
-      - Partner API
-    properties:
-      - type: Documentation
-        url: https://docs.streamone.cloud/
-      - type: OpenAPI
-        url: openapi/synnex-streamone-ion-openapi.yml
-  - aid: synnex:digital-bridge
-    name: TD SYNNEX Digital Bridge API
-    description: >-
-      The Digital Bridge Developer Portal gives engineering teams direct access to REST APIs for products, pricing,
-      orders, renewals, and cloud services. Partners can get sandbox API keys, test endpoints, and integrate live TD
-      SYNNEX data into any workflow or system.
-    humanURL: https://www.tdsynnex.com/na/us/digital-bridge/
-    baseURL: https://api.tdsynnex.com
-    tags:
-      - IT Distribution
-      - Products
-      - Pricing
-      - Orders
-      - Partner Integration
-    properties:
-      - type: Documentation
-        url: https://www.tdsynnex.com/na/us/digital-bridge/
-      - type: DeveloperPortal
-        url: https://www.tdsynnex.com/na/us/digital-bridge/
+- aid: synnex:digital-bridge
+  name: TD SYNNEX Digital Bridge API
+  description: >-
+    The Digital Bridge Developer Portal gives engineering teams direct access to REST APIs for products,
+    pricing, orders, renewals, and cloud services. Partners can get sandbox API keys, test endpoints,
+    and integrate live TD SYNNEX data into any workflow or system.
+  humanURL: https://www.tdsynnex.com/na/us/digital-bridge/
+  baseURL: https://api.tdsynnex.com
+  tags:
+  - IT Distribution
+  - Products
+  - Pricing
+  - Orders
+  - Partner Integration
+  properties:
+  - type: Documentation
+    url: https://www.tdsynnex.com/na/us/digital-bridge/
+  - type: DeveloperPortal
+    url: https://www.tdsynnex.com/na/us/digital-bridge/
+- aid: synnex:synnex-cart-api
+  name: Synnex Cart API
+  description: Shopping cart operations.
+  humanURL: https://www.tdsynnex.com/ion/api/
+  baseURL: https://ion.tdsynnex.com/api/v3
+  tags:
+  - Cart
+  properties:
+  - type: OpenAPI
+    url: openapi/synnex-cart-api-openapi.yml
+  - type: Documentation
+    url: https://docs.streamone.cloud/
+- aid: synnex:synnex-customers-api
+  name: Synnex Customers API
+  description: End customer account management.
+  humanURL: https://www.tdsynnex.com/ion/api/
+  baseURL: https://ion.tdsynnex.com/api/v3
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/synnex-customers-api-openapi.yml
+  - type: Documentation
+    url: https://docs.streamone.cloud/
+- aid: synnex:synnex-orders-api
+  name: Synnex Orders API
+  description: Order creation and management.
+  humanURL: https://www.tdsynnex.com/ion/api/
+  baseURL: https://ion.tdsynnex.com/api/v3
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/synnex-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.streamone.cloud/
+- aid: synnex:synnex-products-api
+  name: Synnex Products API
+  description: Product catalog and SKU operations.
+  humanURL: https://www.tdsynnex.com/ion/api/
+  baseURL: https://ion.tdsynnex.com/api/v3
+  tags:
+  - Products
+  properties:
+  - type: OpenAPI
+    url: openapi/synnex-products-api-openapi.yml
+  - type: Documentation
+    url: https://docs.streamone.cloud/
+- aid: synnex:synnex-reports-api
+  name: Synnex Reports API
+  description: Usage and billing reports.
+  humanURL: https://www.tdsynnex.com/ion/api/
+  baseURL: https://ion.tdsynnex.com/api/v3
+  tags:
+  - Reports
+  properties:
+  - type: OpenAPI
+    url: openapi/synnex-reports-api-openapi.yml
+  - type: Documentation
+    url: https://docs.streamone.cloud/
+- aid: synnex:synnex-subscriptions-api
+  name: Synnex Subscriptions API
+  description: Cloud subscription lifecycle management.
+  humanURL: https://www.tdsynnex.com/ion/api/
+  baseURL: https://ion.tdsynnex.com/api/v3
+  tags:
+  - Subscriptions
+  properties:
+  - type: OpenAPI
+    url: openapi/synnex-subscriptions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.streamone.cloud/
 common:
   - type: AgenticAccess
     url: agentic-access/synnex-agentic-access.yml
