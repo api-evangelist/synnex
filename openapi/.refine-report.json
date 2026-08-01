@@ -1,0 +1,24 @@
+{
+  "provider": "synnex",
+  "sources": [
+    "synnex-cart-api-openapi.yml",
+    "synnex-customers-api-openapi.yml",
+    "synnex-orders-api-openapi.yml",
+    "synnex-products-api-openapi.yml",
+    "synnex-reports-api-openapi.yml",
+    "synnex-subscriptions-api-openapi.yml"
+  ],
+  "outputs": [
+    "synnex-cart-api-openapi.yml",
+    "synnex-customers-api-openapi.yml",
+    "synnex-orders-api-openapi.yml",
+    "synnex-products-api-openapi.yml",
+    "synnex-reports-api-openapi.yml",
+    "synnex-subscriptions-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
