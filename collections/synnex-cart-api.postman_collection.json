@@ -1,0 +1,276 @@
+{
+  "item": [
+    {
+      "id": "852dd2a1-19d7-4aa9-a558-b45086f2cd75",
+      "name": "Cart",
+      "description": {
+        "content": "Shopping cart operations.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7c1d8e2f-b5ce-496c-9a25-0f45544e294b",
+          "name": "Create Cart",
+          "request": {
+            "name": "Create Cart",
+            "description": {
+              "content": "Creates a new shopping cart for processing customer orders.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "cart"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) The reseller's TD SYNNEX account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"items\": [\n    {\n      \"productId\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<number>\"\n    },\n    {\n      \"productId\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"quantity\": \"<integer>\",\n      \"price\": \"<number>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "ec840b8e-f051-4836-aeb8-002dd5bb60ed",
+              "name": "Cart created",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "cart"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) The reseller's TD SYNNEX account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\",\n  \"items\": [\n    {\n      \"productId\": \"string\",\n      \"sku\": \"string\",\n      \"quantity\": 3977,\n      \"price\": 2349.5396531934543\n    },\n    {\n      \"productId\": \"string\",\n      \"sku\": \"string\",\n      \"quantity\": 8460,\n      \"price\": 2803.6010220881335\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"cartId\": \"string\",\n  \"customerId\": \"string\",\n  \"items\": [\n    {\n      \"productId\": \"string\",\n      \"sku\": \"string\",\n      \"quantity\": 2192,\n      \"price\": 2925.792083109234\n    },\n    {\n      \"productId\": \"string\",\n      \"sku\": \"string\",\n      \"quantity\": 1126,\n      \"price\": 4129.675959692836\n    }\n  ],\n  \"totalAmount\": 5269.783199290357,\n  \"createdAt\": \"2019-05-12T14:27:43.105Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b79a01a6-6803-4fba-bde4-7316099e39d2",
+          "name": "Checkout Cart",
+          "request": {
+            "name": "Checkout Cart",
+            "description": {
+              "content": "Processes the cart and converts it to an order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "cart",
+                ":cartId",
+                "checkout"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) The reseller's TD SYNNEX account identifier."
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "cartId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "2f9486dc-52f3-41ce-a7ad-955cf336ac29",
+              "name": "Checkout completed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "cart",
+                    ":cartId",
+                    "checkout"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) The reseller's TD SYNNEX account identifier."
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "cartId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"string\",\n  \"customerId\": \"string\",\n  \"status\": \"pending\",\n  \"totalAmount\": 1217.1861291346631,\n  \"currency\": \"string\",\n  \"createdAt\": \"2022-12-08T00:05:25.053Z\",\n  \"items\": [\n    {\n      \"productId\": \"string\",\n      \"sku\": \"string\",\n      \"quantity\": 5816,\n      \"price\": 6866.802438356153\n    },\n    {\n      \"productId\": \"string\",\n      \"sku\": \"string\",\n      \"quantity\": 412,\n      \"price\": 2497.784033070303\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://ion.tdsynnex.com/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "7c19546f-aaed-4ee1-8986-b25cda9c54d2",
+    "name": "TD SYNNEX StreamOne ION Cart API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.",
+      "type": "text/plain"
+    }
+  }
+}

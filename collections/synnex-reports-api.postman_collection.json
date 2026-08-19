@@ -1,0 +1,150 @@
+{
+  "item": [
+    {
+      "id": "a6a2d5a7-ad2b-4ce3-b765-24646cf04c9c",
+      "name": "Reports",
+      "description": {
+        "content": "Usage and billing reports.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "87ebdfbb-f393-4de0-99ea-9b8c5c179b42",
+          "name": "List Reports",
+          "request": {
+            "name": "List Reports",
+            "description": {
+              "content": "Retrieves available reports with metadata for the reseller account.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "accounts",
+                ":accountId",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "format",
+                  "value": "<string>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "accountId",
+                  "description": "(Required) The reseller's TD SYNNEX account identifier."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1b8d0150-bf77-474c-af64-7a4536488dd0",
+              "name": "Reports list returned",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "accounts",
+                    ":accountId",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "format",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "accountId",
+                      "description": "(Required) The reseller's TD SYNNEX account identifier."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"reportId\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"availableFormats\": [\n      \"string\",\n      \"string\"\n    ],\n    \"generatedAt\": \"1965-04-03T05:51:13.354Z\"\n  },\n  {\n    \"reportId\": \"string\",\n    \"name\": \"string\",\n    \"description\": \"string\",\n    \"availableFormats\": [\n      \"string\",\n      \"string\"\n    ],\n    \"generatedAt\": \"1964-10-16T11:18:05.779Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://ion.tdsynnex.com/api/v3",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "f88c11a5-d6f6-42c5-896f-4e56465001df",
+    "name": "TD SYNNEX StreamOne ION Cart Reports API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.",
+      "type": "text/plain"
+    }
+  }
+}

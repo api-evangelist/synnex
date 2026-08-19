@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "TD SYNNEX StreamOne ION Cart API",
+    "version": "v3"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Cart",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create Cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ion.tdsynnex.com/api/v3/accounts/:accountId/cart",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The reseller's TD SYNNEX account identifier."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates a new shopping cart for processing customer orders."
+        },
+        {
+          "info": {
+            "name": "Checkout Cart",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://ion.tdsynnex.com/api/v3/accounts/:accountId/cart/:cartId/checkout",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The reseller's TD SYNNEX account identifier."
+              },
+              {
+                "name": "cartId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Processes the cart and converts it to an order."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
