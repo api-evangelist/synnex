@@ -40,6 +40,12 @@ apis:
   baseURL: https://api.tdsynnex.com
   tags:
   - IT Distribution
+  - Product
+  - Pricing
+  - Order
+  - Partner Integration
+  tags_raw:
+  - IT Distribution
   - Products
   - Pricing
   - Orders
@@ -79,6 +85,8 @@ apis:
   humanURL: https://www.tdsynnex.com/ion/api/
   baseURL: https://ion.tdsynnex.com/api/v3
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -91,6 +99,8 @@ apis:
   humanURL: https://www.tdsynnex.com/ion/api/
   baseURL: https://ion.tdsynnex.com/api/v3
   tags:
+  - Product
+  tags_raw:
   - Products
   properties:
   - type: OpenAPI
@@ -115,6 +125,8 @@ apis:
   humanURL: https://www.tdsynnex.com/ion/api/
   baseURL: https://ion.tdsynnex.com/api/v3
   tags:
+  - Subscription
+  tags_raw:
   - Subscriptions
   properties:
   - type: OpenAPI
