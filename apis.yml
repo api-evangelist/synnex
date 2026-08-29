@@ -145,6 +145,9 @@ apis:
   - type: Documentation
     url: https://docs.streamone.cloud/
 common:
+  - type: CapabilityMap
+    url: capabilities/synnex-capability-edges.yml
+    name: Synnex Business Capability Map
   - type: AgenticAccess
     url: agentic-access/synnex-agentic-access.yml
   - type: DomainSecurity
