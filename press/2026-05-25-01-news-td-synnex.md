@@ -1,7 +1,9 @@
 ---
 title: News - TD Synnex
 url: https://news.tdsynnex.com/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Synnex" press release artificial intelligence'
 position: 1
 source: serpapi-google

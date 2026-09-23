@@ -1,12 +1,7 @@
 {
   "provider": "synnex",
   "sources": [
-    "synnex-cart-api-openapi.yml",
-    "synnex-customers-api-openapi.yml",
-    "synnex-orders-api-openapi.yml",
-    "synnex-products-api-openapi.yml",
-    "synnex-reports-api-openapi.yml",
-    "synnex-subscriptions-api-openapi.yml"
+    "_original/synnex-streamone-ion-openapi.yml"
   ],
   "outputs": [
     "synnex-cart-api-openapi.yml",
@@ -19,6 +14,17 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "synnex-streamone-ion-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "synnex-cart-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synnex-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synnex-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synnex-products-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synnex-reports-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "synnex-subscriptions-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

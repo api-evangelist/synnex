@@ -1,7 +1,9 @@
 ---
 title: TD SYNNEX Evolves AI Go-to-Market Strategy Through ...
 url: https://www.thecannatareport.com/td-synnex-ai-gtm/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Synnex" press release artificial intelligence'
 position: 5
 source: serpapi-google

@@ -1,7 +1,9 @@
 ---
 title: AI Is the Future. Let's Build It Together!
 url: https://connect.tdsynnex.be/vendor/hpe/ai-is-the-future-lets-build-it-together/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Synnex" press release artificial intelligence'
 position: 3
 source: serpapi-google

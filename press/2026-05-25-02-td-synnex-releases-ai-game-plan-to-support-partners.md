@@ -1,7 +1,9 @@
 ---
 title: TD SYNNEX Releases AI Game Plan to Support Partners ...
 url: https://news.tdsynnex.com/news/td-synnex-releases-ai-game-plan-to-support-partners-effort-to-accelerate-ai-adoption-with-customers/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"Synnex" press release artificial intelligence'
 position: 2
 source: serpapi-google

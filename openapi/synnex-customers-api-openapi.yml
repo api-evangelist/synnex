@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: TD SYNNEX StreamOne ION Cart Customers API
+  title: TD SYNNEX StreamOne ION Customers API
   description: The StreamOne ION API is TD SYNNEX's interface for cloud vendors and reseller partners to manage cloud subscriptions, product catalogs, end customers, and orders through a unified platform. The API uses OAuth 2.0 authentication and supports multi-vendor cloud marketplace operations including Microsoft CSP, Azure, and Google Workspace.
   version: v3
   contact:
@@ -102,6 +102,19 @@ paths:
                 $ref: '#/components/schemas/Customer'
 components:
   schemas:
+    CustomerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
     Customer:
       type: object
       properties:
@@ -140,19 +153,6 @@ components:
           type: string
         address:
           type: object
-    CustomerList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-        totalCount:
-          type: integer
-        page:
-          type: integer
-        pageSize:
-          type: integer
   parameters:
     accountId:
       name: accountId
