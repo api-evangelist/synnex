@@ -66,6 +66,15 @@ paths:
                 $ref: '#/components/schemas/Product'
 components:
   schemas:
+    ProductList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        totalCount:
+          type: integer
     Product:
       type: object
       properties:
@@ -85,15 +94,6 @@ components:
           type: string
         description:
           type: string
-    ProductList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Product'
-        totalCount:
-          type: integer
   parameters:
     accountId:
       name: accountId

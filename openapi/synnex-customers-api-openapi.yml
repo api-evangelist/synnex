@@ -102,6 +102,24 @@ paths:
                 $ref: '#/components/schemas/Customer'
 components:
   schemas:
+    CustomerRequest:
+      type: object
+      required:
+      - companyName
+      - email
+      - country
+      properties:
+        companyName:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        phone:
+          type: string
+        address:
+          type: object
     CustomerList:
       type: object
       properties:
@@ -135,24 +153,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    CustomerRequest:
-      type: object
-      required:
-      - companyName
-      - email
-      - country
-      properties:
-        companyName:
-          type: string
-        email:
-          type: string
-          format: email
-        country:
-          type: string
-        phone:
-          type: string
-        address:
-          type: object
   parameters:
     accountId:
       name: accountId
