@@ -120,19 +120,6 @@ components:
           type: string
         address:
           type: object
-    CustomerList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Customer'
-        totalCount:
-          type: integer
-        page:
-          type: integer
-        pageSize:
-          type: integer
     Customer:
       type: object
       properties:
@@ -153,14 +140,20 @@ components:
         createdAt:
           type: string
           format: date-time
+    CustomerList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Customer'
+        totalCount:
+          type: integer
+        page:
+          type: integer
+        pageSize:
+          type: integer
   parameters:
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The reseller's TD SYNNEX account identifier.
     customerId:
       name: customerId
       in: path
@@ -168,6 +161,13 @@ components:
       schema:
         type: string
       description: End customer identifier.
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
   securitySchemes:
     bearerAuth:
       type: http

@@ -77,32 +77,16 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
 components:
-  parameters:
-    orderId:
-      name: orderId
-      in: path
-      required: true
-      schema:
-        type: string
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The reseller's TD SYNNEX account identifier.
   schemas:
-    OrderItem:
+    OrderList:
       type: object
       properties:
-        productId:
-          type: string
-        sku:
-          type: string
-        quantity:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        totalCount:
           type: integer
-        price:
-          type: number
     Order:
       type: object
       properties:
@@ -127,15 +111,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    OrderList:
+    OrderItem:
       type: object
       properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Order'
-        totalCount:
+        productId:
+          type: string
+        sku:
+          type: string
+        quantity:
           type: integer
+        price:
+          type: number
     OrderRequest:
       type: object
       required:
@@ -148,6 +134,20 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
+  parameters:
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
   securitySchemes:
     bearerAuth:
       type: http

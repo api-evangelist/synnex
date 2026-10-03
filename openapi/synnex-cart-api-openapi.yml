@@ -70,17 +70,22 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    OrderItem:
+    Cart:
       type: object
       properties:
-        productId:
+        cartId:
           type: string
-        sku:
+        customerId:
           type: string
-        quantity:
-          type: integer
-        price:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        totalAmount:
           type: number
+        createdAt:
+          type: string
+          format: date-time
     Order:
       type: object
       properties:
@@ -105,22 +110,17 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    Cart:
+    OrderItem:
       type: object
       properties:
-        cartId:
+        productId:
           type: string
-        customerId:
+        sku:
           type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        totalAmount:
+        quantity:
+          type: integer
+        price:
           type: number
-        createdAt:
-          type: string
-          format: date-time
   parameters:
     accountId:
       name: accountId

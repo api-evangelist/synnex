@@ -40,6 +40,14 @@ paths:
                 items:
                   $ref: '#/components/schemas/Report'
 components:
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
   schemas:
     Report:
       type: object
@@ -57,14 +65,6 @@ components:
         generatedAt:
           type: string
           format: date-time
-  parameters:
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The reseller's TD SYNNEX account identifier.
   securitySchemes:
     bearerAuth:
       type: http
