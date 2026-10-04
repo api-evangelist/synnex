@@ -59,6 +59,41 @@ paths:
                 $ref: '#/components/schemas/Order'
 components:
   schemas:
+    OrderItem:
+      type: object
+      properties:
+        productId:
+          type: string
+        sku:
+          type: string
+        quantity:
+          type: integer
+        price:
+          type: number
+    Order:
+      type: object
+      properties:
+        orderId:
+          type: string
+        customerId:
+          type: string
+        status:
+          type: string
+          enum:
+          - pending
+          - completed
+          - cancelled
+        totalAmount:
+          type: number
+        currency:
+          type: string
+        createdAt:
+          type: string
+          format: date-time
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
     CartRequest:
       type: object
       required:
@@ -86,41 +121,6 @@ components:
         createdAt:
           type: string
           format: date-time
-    Order:
-      type: object
-      properties:
-        orderId:
-          type: string
-        customerId:
-          type: string
-        status:
-          type: string
-          enum:
-          - pending
-          - completed
-          - cancelled
-        totalAmount:
-          type: number
-        currency:
-          type: string
-        createdAt:
-          type: string
-          format: date-time
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-    OrderItem:
-      type: object
-      properties:
-        productId:
-          type: string
-        sku:
-          type: string
-        quantity:
-          type: integer
-        price:
-          type: number
   parameters:
     accountId:
       name: accountId

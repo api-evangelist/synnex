@@ -74,19 +74,6 @@ paths:
                 $ref: '#/components/schemas/Subscription'
 components:
   schemas:
-    SubscriptionUpdate:
-      type: object
-      properties:
-        quantity:
-          type: integer
-        status:
-          type: string
-          enum:
-          - active
-          - suspended
-          - cancelled
-        autoRenew:
-          type: boolean
     Subscription:
       type: object
       properties:
@@ -110,6 +97,19 @@ components:
         createdAt:
           type: string
           format: date-time
+    SubscriptionUpdate:
+      type: object
+      properties:
+        quantity:
+          type: integer
+        status:
+          type: string
+          enum:
+          - active
+          - suspended
+          - cancelled
+        autoRenew:
+          type: boolean
     SubscriptionList:
       type: object
       properties:
@@ -120,6 +120,12 @@ components:
         totalCount:
           type: integer
   parameters:
+    subscriptionId:
+      name: subscriptionId
+      in: path
+      required: true
+      schema:
+        type: string
     customerId:
       name: customerId
       in: path
@@ -127,12 +133,6 @@ components:
       schema:
         type: string
       description: End customer identifier.
-    subscriptionId:
-      name: subscriptionId
-      in: path
-      required: true
-      schema:
-        type: string
     accountId:
       name: accountId
       in: path
