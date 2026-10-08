@@ -146,6 +146,12 @@ apis:
   - type: Documentation
     url: https://docs.streamone.cloud/
 common:
+  - type: Plans
+    url: plans/synnex-plans-pricing.yml
+  - type: RateLimits
+    url: rate-limits/synnex-rate-limits.yml
+  - type: FinOps
+    url: finops/synnex-finops.yml
   - type: CapabilityMap
     url: capabilities/synnex-capability-edges.yml
     name: Synnex Business Capability Map
