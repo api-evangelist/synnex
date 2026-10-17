@@ -59,6 +59,22 @@ paths:
                 $ref: '#/components/schemas/Order'
 components:
   schemas:
+    Cart:
+      type: object
+      properties:
+        cartId:
+          type: string
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
+        totalAmount:
+          type: number
+        createdAt:
+          type: string
+          format: date-time
     OrderItem:
       type: object
       properties:
@@ -105,22 +121,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    Cart:
-      type: object
-      properties:
-        cartId:
-          type: string
-        customerId:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-        totalAmount:
-          type: number
-        createdAt:
-          type: string
-          format: date-time
   parameters:
     accountId:
       name: accountId

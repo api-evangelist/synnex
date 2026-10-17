@@ -77,16 +77,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/Order'
 components:
+  parameters:
+    accountId:
+      name: accountId
+      in: path
+      required: true
+      schema:
+        type: string
+      description: The reseller's TD SYNNEX account identifier.
+    orderId:
+      name: orderId
+      in: path
+      required: true
+      schema:
+        type: string
   schemas:
-    OrderList:
-      type: object
-      properties:
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/Order'
-        totalCount:
-          type: integer
     OrderItem:
       type: object
       properties:
@@ -98,6 +103,27 @@ components:
           type: integer
         price:
           type: number
+    OrderList:
+      type: object
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Order'
+        totalCount:
+          type: integer
+    OrderRequest:
+      type: object
+      required:
+      - customerId
+      - items
+      properties:
+        customerId:
+          type: string
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderItem'
     Order:
       type: object
       properties:
@@ -122,32 +148,6 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/OrderItem'
-    OrderRequest:
-      type: object
-      required:
-      - customerId
-      - items
-      properties:
-        customerId:
-          type: string
-        items:
-          type: array
-          items:
-            $ref: '#/components/schemas/OrderItem'
-  parameters:
-    accountId:
-      name: accountId
-      in: path
-      required: true
-      schema:
-        type: string
-      description: The reseller's TD SYNNEX account identifier.
-    orderId:
-      name: orderId
-      in: path
-      required: true
-      schema:
-        type: string
   securitySchemes:
     bearerAuth:
       type: http
